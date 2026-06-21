@@ -1,0 +1,134 @@
+// injector.dll
+// NEXUS EXECUTOR INJECTOR
+// AUTHOR: PROFESOR_FATIH + NEXUS 1.0
+
+#include <windows.h>
+#include <stdio.h>
+#include <string>
+#include <vector>
+
+#pragma comment(linker, "/EXPORT:Initialize=Initialize")
+#pragma comment(linker, "/EXPORT:Inject=Inject")
+
+// Global variables
+HANDLE hRobloxProcess = NULL;
+bool isInjected = false;
+
+// ============================================
+// UTILITY FUNCTIONS
+// ============================================
+
+DWORD GetProcessIdByName(const char* processName) {
+    DWORD processId = 0;
+    HANDLE snap = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+    
+    if (snap != INVALID_HANDLE_VALUE) {
+        PROCESSENTRY32 entry;
+        entry.dwSize = sizeof(entry);
+        
+        if (Process32First(snap, &entry)) {
+            do {
+                if (_stricmp(entry.szExeFile, processName) == 0) {
+                    processId = entry.th32ProcessID;
+                    break;
+                }
+            } while (Process32Next(snap, &entry));
+        }
+        CloseHandle(snap);
+    }
+    return processId;
+}
+
+// ============================================
+// CORE INJECTION FUNCTIONS
+// ============================================
+
+extern "C" __declspec(dllexport) BOOL Inject() {
+    // Find Roblox process
+    DWORD pid = GetProcessIdByName("RobloxPlayerBeta.exe");
+    if (pid == 0) {
+        MessageBox(NULL, TEXT("Roblox process not found!"), TEXT("NEXUS"), MB_OK | MB_ICONERROR);
+        return FALSE;
+    }
+    
+    // Open process
+    hRobloxProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
+    if (!hRobloxProcess) {
+        MessageBox(NULL, TEXT("Failed to open Roblox process!"), TEXT("NEXUS"), MB_OK | MB_ICONERROR);
+        return FALSE;
+    }
+    
+    // Allocate memory in target process
+    LPVOID remoteMemory = VirtualAllocEx(
+        hRobloxProcess,
+        NULL,
+        1024,
+        MEM_COMMIT | MEM_RESERVE,
+        PAGE_READWRITE
+    );
+    
+    if (!remoteMemory) {
+        MessageBox(NULL, TEXT("Failed to allocate memory!"), TEXT("NEXUS"), MB_OK | MB_ICONERROR);
+        CloseHandle(hRobloxProcess);
+        return FALSE;
+    }
+    
+    // Write shellcode to target process
+    char shellcode[] = {
+        0x31, 0xC0, 0x50, 0x68, 0x6C, 0x6C, 0x2E, 0x64,
+        0x68, 0x61, 0x62, 0x69, 0x6E, 0x88, 0x44, 0x24,
+        0x03, 0x54, 0x59, 0x51, 0x51, 0x6A, 0x00, 0xE8
+    };
+    
+    SIZE_T bytesWritten = 0;
+    WriteProcessMemory(
+        hRobloxProcess,
+        remoteMemory,
+        shellcode,
+        sizeof(shellcode),
+        &bytesWritten
+    );
+    
+    // Create remote thread
+    HANDLE hThread = CreateRemoteThread(
+        hRobloxProcess,
+        NULL,
+        0,
+        (LPTHREAD_START_ROUTINE)remoteMemory,
+        NULL,
+        0,
+        NULL
+    );
+    
+    if (hThread) {
+        WaitForSingleObject(hThread, INFINITE);
+        CloseHandle(hThread);
+        isInjected = true;
+        MessageBox(NULL, TEXT("NEXUS EXECUTOR INJECTED!"), TEXT("NEXUS"), MB_OK | MB_ICONINFORMATION);
+        return TRUE;
+    }
+    
+    MessageBox(NULL, TEXT("Failed to create remote thread!"), TEXT("NEXUS"), MB_OK | MB_ICONERROR);
+    return FALSE;
+}
+
+extern "C" __declspec(dllexport) BOOL Initialize() {
+    // NEXUS EXECUTOR INIT
+    MessageBox(NULL, TEXT("NEXUS EXECUTOR V1.0 - HYBRID ULTIMATE"), TEXT("NEXUS"), MB_OK | MB_ICONINFORMATION);
+    return TRUE;
+}
+
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
+    switch (ul_reason_for_call) {
+        case DLL_PROCESS_ATTACH:
+            // Create thread to initialize
+            HANDLE hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Initialize, NULL, 0, NULL);
+            if (hThread) CloseHandle(hThread);
+            break;
+        case DLL_THREAD_ATTACH:
+        case DLL_THREAD_DETACH:
+        case DLL_PROCESS_DETACH:
+            break;
+    }
+    return TRUE;
+}

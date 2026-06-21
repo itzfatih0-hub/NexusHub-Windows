@@ -1,0 +1,289 @@
+/* ============================================
+   NEXUS EXECUTOR — THEME.CSS
+   AUTHOR: PROFESOR_FATIH + NEXUS 1.0
+   ============================================ */
+
+/* ROOT VARIABLES */
+:root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #111111;
+    --bg-tertiary: #1a1a1a;
+    --fg-primary: #00ff00;
+    --fg-secondary: #00aa55;
+    --fg-dim: #666666;
+    --accent-green: #00ff00;
+    --accent-blue: #00aaff;
+    --accent-red: #ff3333;
+    --accent-yellow: #ffaa00;
+    --accent-purple: #aa44ff;
+    --accent-pink: #ff44aa;
+    --font-mono: 'Consolas', 'Courier New', monospace;
+    --font-size-sm: 9px;
+    --font-size-md: 10px;
+    --font-size-lg: 14px;
+    --font-size-xl: 16px;
+    --border-radius: 4px;
+    --border-color: #00ff0044;
+}
+
+/* GLOBAL */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--fg-primary);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+}
+
+/* MAIN WINDOW */
+.nexus-window {
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+/* HEADER */
+.nexus-header {
+    background: linear-gradient(180deg, #0a2a0a 0%, var(--bg-primary) 100%);
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px;
+}
+
+.nexus-title {
+    color: var(--fg-primary);
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    letter-spacing: 2px;
+}
+
+.nexus-subtitle {
+    color: var(--fg-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* STATUS BAR */
+.nexus-status {
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    padding: 5px 10px;
+}
+
+.nexus-status-text {
+    color: var(--fg-primary);
+    font-size: var(--font-size-md);
+}
+
+/* PANELS */
+.nexus-panel {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 5px;
+}
+
+.nexus-panel-title {
+    color: var(--fg-primary);
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    padding: 2px 8px;
+    background: linear-gradient(90deg, #00ff0022, transparent);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* INPUT AREA */
+.nexus-input {
+    background-color: var(--bg-tertiary);
+    color: var(--fg-primary);
+    border: 1px solid #00ff0044;
+    border-radius: var(--border-radius);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    padding: 8px;
+}
+
+.nexus-input:focus {
+    border-color: var(--fg-primary);
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.1);
+}
+
+/* OUTPUT LOG */
+.nexus-output {
+    background-color: var(--bg-tertiary);
+    color: #aaaaaa;
+    border: 1px solid #00ff0044;
+    border-radius: var(--border-radius);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    padding: 8px;
+}
+
+/* BUTTONS */
+.nexus-btn {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    font-weight: bold;
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nexus-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.nexus-btn:active {
+    transform: scale(0.98);
+}
+
+.nexus-btn-inject {
+    background: linear-gradient(135deg, #00aa55, #00cc77);
+    color: #000000;
+}
+
+.nexus-btn-inject:hover {
+    background: linear-gradient(135deg, #00cc77, #00ee99);
+}
+
+.nexus-btn-execute {
+    background: linear-gradient(135deg, #0088ff, #00aaff);
+    color: #000000;
+}
+
+.nexus-btn-execute:hover {
+    background: linear-gradient(135deg, #00aaff, #00ccff);
+}
+
+.nexus-btn-stop {
+    background: linear-gradient(135deg, #cc2222, #ff3333);
+    color: #ffffff;
+}
+
+.nexus-btn-stop:hover {
+    background: linear-gradient(135deg, #ff3333, #ff5555);
+}
+
+.nexus-btn-clear {
+    background: linear-gradient(135deg, #cc8800, #ffaa00);
+    color: #000000;
+}
+
+.nexus-btn-library {
+    background: linear-gradient(135deg, #8833cc, #aa44ff);
+    color: #ffffff;
+}
+
+.nexus-btn-save {
+    background: linear-gradient(135deg, #cc6600, #ff8800);
+    color: #000000;
+}
+
+.nexus-btn-load {
+    background: linear-gradient(135deg, #0066cc, #0088ff);
+    color: #000000;
+}
+
+.nexus-btn-antiban {
+    background: linear-gradient(135deg, #cc2288, #ff44aa);
+    color: #ffffff;
+}
+
+.nexus-btn-exit {
+    background: linear-gradient(135deg, #555555, #777777);
+    color: #ffffff;
+}
+
+/* CONSOLE */
+.nexus-console {
+    background-color: var(--bg-tertiary);
+    border: 1px solid #00ff0044;
+    border-radius: var(--border-radius);
+    padding: 5px;
+}
+
+.nexus-console-input {
+    background-color: var(--bg-tertiary);
+    color: var(--fg-primary);
+    border: none;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-md);
+    padding: 5px;
+    width: 100%;
+}
+
+.nexus-console-input:focus {
+    outline: none;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--fg-primary);
+    border-radius: var(--border-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--fg-secondary);
+}
+
+/* TOOLTIP */
+.nexus-tooltip {
+    background-color: var(--bg-secondary);
+    color: var(--fg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    padding: 4px 8px;
+    font-size: var(--font-size-sm);
+}
+
+/* ANIMATIONS */
+@keyframes glow {
+    0% { text-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
+    50% { text-shadow: 0 0 30px rgba(0, 255, 0, 0.6); }
+    100% { text-shadow: 0 0 10px rgba(0, 255, 0, 0.2); }
+}
+
+.nexus-glow {
+    animation: glow 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.nexus-pulse {
+    animation: pulse 1s infinite;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .nexus-title {
+        font-size: var(--font-size-lg);
+    }
+    .nexus-btn {
+        font-size: var(--font-size-sm);
+        padding: 4px 8px;
+    }
+}

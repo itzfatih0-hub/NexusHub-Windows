@@ -1,0 +1,73 @@
+{
+    "version": "1.0.0",
+    "last_updated": "2026-06-18",
+    "categories": {
+        "universal": [
+            {
+                "id": "infinite_yield",
+                "name": "Infinite Yield",
+                "file": "universal/infinite_yield.lua",
+                "url": "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source",
+                "description": "Universal admin command script with over 100+ commands",
+                "author": "EdgeIY",
+                "version": "2.0"
+            },
+            {
+                "id": "cmd_x",
+                "name": "CMD-X",
+                "file": "universal/cmd_x.lua",
+                "url": "https://raw.githubusercontent.com/CMD-X/CMD-X/master/CMD-X.lua",
+                "description": "Advanced universal script with GUI interface",
+                "author": "CMD-X Team",
+                "version": "3.5"
+            }
+        ],
+        "games": [
+            {
+                "id": "arsenal",
+                "name": "Arsenal",
+                "file": "games/arsenal.lua",
+                "url": "https://raw.githubusercontent.com/ArsenalHub/Arsenal/main/loader.lua",
+                "description": "Aimbot, ESP, and auto-kill for Arsenal",
+                "game": "Arsenal",
+                "version": "2.1"
+            },
+            {
+                "id": "bedwars",
+                "name": "BedWars",
+                "file": "games/bedwars.lua",
+                "url": "https://raw.githubusercontent.com/BedWarsHub/BedWars/main/loader.lua",
+                "description": "Auto-farm, auto-bridge, and auto-defend",
+                "game": "BedWars",
+                "version": "1.8"
+            },
+            {
+                "id": "blox_fruits",
+                "name": "Blox Fruits",
+                "file": "games/blox_fruits.lua",
+                "url": "https://raw.githubusercontent.com/BloxFruitsHub/BloxFruits/main/loader.lua",
+                "description": "Auto-farm, auto-raid, auto-quest complete",
+                "game": "Blox Fruits",
+                "version": "3.2"
+            }
+        ],
+        "tools": [
+            {
+                "id": "anti_afk",
+                "name": "Anti-AFK",
+                "file": "tools/anti_afk.lua",
+                "url": "https://raw.githubusercontent.com/NexusTools/AntiAFK/main/loader.lua",
+                "description": "Prevent AFK kick with auto-movement",
+                "version": "1.0"
+            },
+            {
+                "id": "esp",
+                "name": "ESP",
+                "file": "tools/esp.lua",
+                "url": "https://raw.githubusercontent.com/NexusTools/ESP/main/loader.lua",
+                "description": "Player ESP with distance and health bars",
+                "version": "2.0"
+            }
+        ]
+    }
+}

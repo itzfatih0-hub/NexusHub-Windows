@@ -1,0 +1,62 @@
+// memory.dll
+// NEXUS EXECUTOR MEMORY MANIPULATION
+// AUTHOR: PROFESOR_FATIH + NEXUS 1.0
+
+#include <windows.h>
+#include <stdio.h>
+#include <vector>
+
+#pragma comment(linker, "/EXPORT:ReadMemory=ReadMemory")
+#pragma comment(linker, "/EXPORT:WriteMemory=WriteMemory")
+#pragma comment(linker, "/EXPORT:ScanMemory=ScanMemory")
+
+// ============================================
+// MEMORY FUNCTIONS
+// ============================================
+
+extern "C" __declspec(dllexport) BOOL ReadMemory(DWORD pid, LPVOID address, LPVOID buffer, SIZE_T size) {
+    HANDLE hProcess = OpenProcess(PROCESS_VM_READ, FALSE, pid);
+    if (!hProcess) return FALSE;
+    
+    SIZE_T bytesRead = 0;
+    BOOL result = ReadProcessMemory(hProcess, address, buffer, size, &bytesRead);
+    CloseHandle(hProcess);
+    return result && bytesRead == size;
+}
+
+extern "C" __declspec(dllexport) BOOL WriteMemory(DWORD pid, LPVOID address, LPVOID buffer, SIZE_T size) {
+    HANDLE hProcess = OpenProcess(PROCESS_VM_WRITE | PROCESS_VM_OPERATION, FALSE, pid);
+    if (!hProcess) return FALSE;
+    
+    SIZE_T bytesWritten = 0;
+    BOOL result = WriteProcessMemory(hProcess, address, buffer, size, &bytesWritten);
+    CloseHandle(hProcess);
+    return result && bytesWritten == size;
+}
+
+extern "C" __declspec(dllexport) LPVOID ScanMemory(DWORD pid, LPVOID startAddress, SIZE_T size, LPVOID pattern, SIZE_T patternSize) {
+    HANDLE hProcess = OpenProcess(PROCESS_VM_READ, FALSE, pid);
+    if (!hProcess) return NULL;
+    
+    std::vector<BYTE> buffer(size);
+    SIZE_T bytesRead = 0;
+    
+    if (ReadProcessMemory(hProcess, startAddress, buffer.data(), size, &bytesRead)) {
+        for (SIZE_T i = 0; i <= bytesRead - patternSize; i++) {
+            bool found = true;
+            for (SIZE_T j = 0; j < patternSize; j++) {
+                if (buffer[i + j] != ((BYTE*)pattern)[j]) {
+                    found = false;
+                    break;
+                }
+            }
+            if (found) {
+                CloseHandle(hProcess);
+                return (LPVOID)((DWORD_PTR)startAddress + i);
+            }
+        }
+    }
+    
+    CloseHandle(hProcess);
+    return NULL;
+}

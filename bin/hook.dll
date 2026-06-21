@@ -1,0 +1,52 @@
+// hook.dll
+// NEXUS EXECUTOR API HOOK
+// AUTHOR: PROFESOR_FATIH + NEXUS 1.0
+
+#include <windows.h>
+#include <detours.h>
+#include <stdio.h>
+
+#pragma comment(lib, "detours.lib")
+
+// ============================================
+// HOOK FUNCTIONS
+// ============================================
+
+typedef int (WINAPI *MessageBoxW_t)(HWND, LPCWSTR, LPCWSTR, UINT);
+MessageBoxW_t OriginalMessageBoxW = MessageBoxW;
+
+int WINAPI HookedMessageBoxW(HWND hWnd, LPCWSTR lpText, LPCWSTR lpCaption, UINT uType) {
+    // Modify message box content
+    LPCWSTR newText = L"NEXUS EXECUTOR HOOKED: " + std::wstring(lpText);
+    return OriginalMessageBoxW(hWnd, newText.c_str(), L"NEXUS HOOK", uType);
+}
+
+// ============================================
+// HOOK INITIALIZATION
+// ============================================
+
+extern "C" __declspec(dllexport) BOOL InstallHook() {
+    DetourTransactionBegin();
+    DetourUpdateThread(GetCurrentThread());
+    DetourAttach(&(PVOID&)OriginalMessageBoxW, HookedMessageBoxW);
+    return DetourTransactionCommit() == NO_ERROR;
+}
+
+extern "C" __declspec(dllexport) BOOL UninstallHook() {
+    DetourTransactionBegin();
+    DetourUpdateThread(GetCurrentThread());
+    DetourDetach(&(PVOID&)OriginalMessageBoxW, HookedMessageBoxW);
+    return DetourTransactionCommit() == NO_ERROR;
+}
+
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved) {
+    switch (ul_reason_for_call) {
+        case DLL_PROCESS_ATTACH:
+            InstallHook();
+            break;
+        case DLL_PROCESS_DETACH:
+            UninstallHook();
+            break;
+    }
+    return TRUE;
+}

@@ -1,0 +1,42 @@
+{
+    "version": "1.0.0",
+    "theme": "dark",
+    "auto_inject": false,
+    "auto_run": false,
+    "safe_mode": true,
+    "remember_last_script": true,
+    "last_script": "universal/infinite_yield.lua",
+    "anti_ban": {
+        "enabled": true,
+        "level": "advanced",
+        "bypass_hwid": true,
+        "bypass_ip": true,
+        "clean_memory": true,
+        "spoof_process": true
+    },
+    "logging": {
+        "enabled": true,
+        "level": "info",
+        "max_size_mb": 10,
+        "save_path": "logs/execution.log"
+    },
+    "ui": {
+        "window_width": 1000,
+        "window_height": 750,
+        "font_size": 10,
+        "show_splash": true,
+        "animation_speed": "fast"
+    },
+    "hotkeys": {
+        "execute": "F5",
+        "inject": "F6",
+        "stop": "F7",
+        "clear": "F8"
+    },
+    "network": {
+        "proxy_enabled": false,
+        "proxy_url": "",
+        "timeout": 10,
+        "retry_count": 3
+    }
+}
