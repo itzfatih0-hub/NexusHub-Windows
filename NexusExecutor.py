@@ -1722,4 +1722,3 @@ if __name__ == "__main__":
     
     app = NexusUI()
     app.run()
->>>>>>> dae348ffc3857b877071f92189684741e964ca1a
