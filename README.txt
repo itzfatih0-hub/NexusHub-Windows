@@ -40,10 +40,6 @@
 - /logs    - Execution logs
 - /config  - User settings
 
-🛡️ SUPPORT:
-Join our Discord: https://discord.gg/nexus
-GitHub: https://github.com/NexusHub/nexus_executor
-
 ⚠️ DISCLAIMER:
 This tool is for educational purposes only.
 Use at your own risk. We are not responsible for any bans or damages.
