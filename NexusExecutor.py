@@ -860,7 +860,6 @@ if __name__ == "__main__":
     
     app = NexusUI()
     app.run()
-=======
 # ============================================================
 # NEXUS EXECUTOR V1.0 — HYBRID ULTIMATE (WINDOWS EDITION)
 # AUTHOR: PROFESOR_FATIH + NEXUS 1.0
