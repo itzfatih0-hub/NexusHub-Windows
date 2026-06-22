@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @echo off
 title NEXUS EXECUTOR V1.0 — INSTALLER
 color 0A
@@ -84,7 +83,6 @@ echo ║    Run NexusExecutor.exe to start!                       ║
 echo ║                                                           ║
 echo ╚═══════════════════════════════════════════════════════════╝
 echo.
-=======
 @echo off
 title NEXUS EXECUTOR V1.0 — INSTALLER
 color 0A
@@ -170,5 +168,4 @@ echo ║    Run NexusExecutor.exe to start!                       ║
 echo ║                                                           ║
 echo ╚═══════════════════════════════════════════════════════════╝
 echo.
->>>>>>> dae348ffc3857b877071f92189684741e964ca1a
 pause
