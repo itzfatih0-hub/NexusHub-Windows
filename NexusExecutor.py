@@ -1,5 +1,5 @@
 # ============================================================
-# NEXUS EXECUTOR V1.0 — HYBRID ULTIMATE (WINDOWS EDITION)
+# NEXUS EXECUTOR V1.0 — HYBRID ULTIMATE (SIMPLE MODERN)
 # AUTHOR: PROFESOR_FATIH + NEXUS 1.0
 # BUILD: OVERPOWER 2026
 # ============================================================
@@ -29,15 +29,6 @@ VERSION = "1.0.0"
 BUILD = "HYBRID-ULTIMATE"
 AUTHOR = "PROFESOR_FATIH + NEXUS 1.0"
 RELEASE_DATE = "2026"
-
-COLORS = {
-    'bg': '#0a0a0a',
-    'fg': '#00ff00',
-    'accent': '#00aa55',
-    'error': '#ff3333',
-    'warning': '#ffaa00',
-    'info': '#00aaff'
-}
 
 # ============================================================
 # ADMIN CHECK
@@ -73,10 +64,6 @@ def get_timestamp():
 def ensure_dir(path):
     if not os.path.exists(path):
         os.makedirs(path)
-
-def log_message(msg, level="INFO"):
-    timestamp = get_timestamp()
-    return f"[{timestamp}] {level}: {msg}"
 
 # ============================================================
 # SCRIPT MANAGER
@@ -142,7 +129,7 @@ class ScriptManager:
     def get_script_content(self, filename):
         path = os.path.join(self.script_dir, filename)
         if os.path.exists(path):
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 return f.read()
         return None
     
@@ -333,16 +320,17 @@ class AntiBanSystem:
             return False
 
 # ============================================================
-# NEXUS UI
+# NEXUS UI — SIMPLE MODERN
 # ============================================================
 
 class NexusUI:
     def __init__(self):
         self.window = tk.Tk()
         self.window.title(f"NEXUS EXECUTOR V{VERSION} — HYBRID ULTIMATE")
-        self.window.geometry("1000x750")
-        self.window.configure(bg=COLORS['bg'])
+        self.window.geometry("1050x740")
+        self.window.configure(bg='#1a1a2e')
         self.window.resizable(True, True)
+        self.window.minsize(900, 650)
         
         try:
             if os.path.exists("assets/icon.ico"):
@@ -358,67 +346,72 @@ class NexusUI:
         self.setup_ui()
     
     def setup_ui(self):
-        title_frame = tk.Frame(self.window, bg=COLORS['bg'])
-        title_frame.pack(fill=tk.X, pady=5)
+        # HEADER
+        header = tk.Frame(self.window, bg='#16213e', height=60)
+        header.pack(fill=tk.X, side=tk.TOP)
+        header.pack_propagate(False)
         
         title = tk.Label(
-            title_frame,
-            text="☠️ NEXUS EXECUTOR V1.0 — HYBRID ULTIMATE ☠️",
-            font=("Consolas", 16, "bold"),
-            fg=COLORS['fg'],
-            bg=COLORS['bg']
+            header,
+            text="☠️ NEXUS EXECUTOR",
+            font=("Arial", 18, "bold"),
+            fg='#00ff88',
+            bg='#16213e'
         )
-        title.pack()
+        title.pack(side=tk.LEFT, padx=15, pady=10)
         
-        subtitle = tk.Label(
-            title_frame,
-            text=f"AUTHOR: {AUTHOR} | BUILD: {BUILD}",
-            font=("Consolas", 9),
-            fg=COLORS['info'],
-            bg=COLORS['bg']
+        ver = tk.Label(
+            header,
+            text=f"v{VERSION}",
+            font=("Arial", 9, "bold"),
+            fg='#16213e',
+            bg='#00ff88',
+            padx=8,
+            pady=2
         )
-        subtitle.pack()
+        ver.pack(side=tk.LEFT, padx=5)
         
-        status_frame = tk.Frame(self.window, bg=COLORS['bg'])
-        status_frame.pack(fill=tk.X, padx=10, pady=5)
-        
-        self.status_var = tk.StringVar()
-        self.status_var.set("STATUS: READY | INJECTED: ✗ | MODE: HYBRID")
-        
-        status_label = tk.Label(
-            status_frame,
-            textvariable=self.status_var,
-            font=("Consolas", 10),
-            fg=COLORS['fg'],
-            bg=COLORS['bg']
+        self.status_label = tk.Label(
+            header,
+            text="● READY",
+            font=("Arial", 10, "bold"),
+            fg='#4a5a7a',
+            bg='#16213e'
         )
-        status_label.pack()
+        self.status_label.pack(side=tk.RIGHT, padx=15)
         
-        main_frame = tk.Frame(self.window, bg=COLORS['bg'])
-        main_frame.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        # MAIN FRAME
+        main = tk.Frame(self.window, bg='#1a1a2e')
+        main.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
         
-        left_panel = tk.Frame(main_frame, bg=COLORS['bg'])
-        left_panel.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
+        # LEFT PANEL
+        left = tk.Frame(main, bg='#1a1a2e')
+        left.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 5))
         
-        script_frame = tk.LabelFrame(
-            left_panel,
+        # SCRIPT INPUT
+        sf = tk.LabelFrame(
+            left,
             text="📜 SCRIPT INPUT",
-            font=("Consolas", 10),
-            fg=COLORS['fg'],
-            bg=COLORS['bg'],
+            font=("Arial", 10, "bold"),
+            fg='#00ff88',
+            bg='#16213e',
             labelanchor='n'
         )
-        script_frame.pack(fill=tk.BOTH, expand=True)
+        sf.pack(fill=tk.BOTH, expand=True)
         
         self.script_input = scrolledtext.ScrolledText(
-            script_frame,
+            sf,
             font=("Consolas", 10),
-            bg='#111111',
-            fg=COLORS['fg'],
-            insertbackground=COLORS['fg'],
-            height=12
+            bg='#0f0f1a',
+            fg='#00ff88',
+            insertbackground='#00ff88',
+            relief=tk.FLAT,
+            bd=0,
+            wrap=tk.WORD,
+            padx=10,
+            pady=10
         )
-        self.script_input.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.script_input.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
         
         default_script = '''-- NEXUS EXECUTOR V1.0
 -- HYBRID ULTIMATE SCRIPT
@@ -433,215 +426,167 @@ print("Welcome to the ultimate executor!")
 '''
         self.script_input.insert('1.0', default_script)
         
-        btn_frame = tk.Frame(left_panel, bg=COLORS['bg'])
-        btn_frame.pack(fill=tk.X, pady=5)
+        # BUTTONS
+        btn_frame = tk.Frame(left, bg='#1a1a2e')
+        btn_frame.pack(fill=tk.X, pady=8)
         
-        btn_row1 = tk.Frame(btn_frame, bg=COLORS['bg'])
-        btn_row1.pack(fill=tk.X, pady=2)
+        row1 = tk.Frame(btn_frame, bg='#1a1a2e')
+        row1.pack(fill=tk.X, pady=2)
         
-        self.inject_btn = tk.Button(
-            btn_row1,
-            text="🚀 INJECT",
-            command=self.inject_click,
-            font=("Consolas", 10, "bold"),
-            bg=COLORS['accent'],
-            fg='#000000',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.inject_btn.pack(side=tk.LEFT, padx=3)
+        self.inject_btn = tk.Button(row1, text="🚀 INJECT", command=self.inject_click, font=("Arial", 9, "bold"), bg='#00aa55', fg='#000000', padx=15, pady=5)
+        self.inject_btn.pack(side=tk.LEFT, padx=2)
         
-        self.execute_btn = tk.Button(
-            btn_row1,
-            text="▶️ EXECUTE",
-            command=self.execute_click,
-            font=("Consolas", 10, "bold"),
-            bg=COLORS['info'],
-            fg='#000000',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.execute_btn.pack(side=tk.LEFT, padx=3)
+        self.execute_btn = tk.Button(row1, text="▶️ EXECUTE", command=self.execute_click, font=("Arial", 9, "bold"), bg='#0088ff', fg='#000000', padx=15, pady=5)
+        self.execute_btn.pack(side=tk.LEFT, padx=2)
         
-        self.stop_btn = tk.Button(
-            btn_row1,
-            text="🛑 STOP",
-            command=self.stop_click,
-            font=("Consolas", 10, "bold"),
-            bg=COLORS['error'],
-            fg='#ffffff',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.stop_btn.pack(side=tk.LEFT, padx=3)
+        self.stop_btn = tk.Button(row1, text="🛑 STOP", command=self.stop_click, font=("Arial", 9, "bold"), bg='#ef4444', fg='#000000', padx=15, pady=5)
+        self.stop_btn.pack(side=tk.LEFT, padx=2)
         
-        btn_row2 = tk.Frame(btn_frame, bg=COLORS['bg'])
-        btn_row2.pack(fill=tk.X, pady=2)
+        self.clear_btn = tk.Button(row1, text="🧹 CLEAR", command=self.clear_click, font=("Arial", 9, "bold"), bg='#f59e0b', fg='#000000', padx=15, pady=5)
+        self.clear_btn.pack(side=tk.LEFT, padx=2)
         
-        self.clear_btn = tk.Button(
-            btn_row2,
-            text="🧹 CLEAR",
-            command=self.clear_click,
-            font=("Consolas", 10, "bold"),
-            bg=COLORS['warning'],
-            fg='#000000',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.clear_btn.pack(side=tk.LEFT, padx=3)
+        row2 = tk.Frame(btn_frame, bg='#1a1a2e')
+        row2.pack(fill=tk.X, pady=2)
         
-        self.scripts_btn = tk.Button(
-            btn_row2,
-            text="📚 LIBRARY",
-            command=self.scripts_click,
-            font=("Consolas", 10, "bold"),
-            bg='#aa44ff',
-            fg='#ffffff',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.scripts_btn.pack(side=tk.LEFT, padx=3)
+        self.scripts_btn = tk.Button(row2, text="📚 LIBRARY", command=self.scripts_click, font=("Arial", 9, "bold"), bg='#7c3aed', fg='#ffffff', padx=15, pady=5)
+        self.scripts_btn.pack(side=tk.LEFT, padx=2)
         
-        self.save_btn = tk.Button(
-            btn_row2,
-            text="💾 SAVE",
-            command=self.save_click,
-            font=("Consolas", 10, "bold"),
-            bg='#ff8800',
-            fg='#000000',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.save_btn.pack(side=tk.LEFT, padx=3)
+        self.save_btn = tk.Button(row2, text="💾 SAVE", command=self.save_click, font=("Arial", 9, "bold"), bg='#059669', fg='#000000', padx=15, pady=5)
+        self.save_btn.pack(side=tk.LEFT, padx=2)
         
-        self.load_btn = tk.Button(
-            btn_row2,
-            text="📂 LOAD",
-            command=self.load_click,
-            font=("Consolas", 10, "bold"),
-            bg='#0088ff',
-            fg='#000000',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.load_btn.pack(side=tk.LEFT, padx=3)
+        self.load_btn = tk.Button(row2, text="📂 LOAD", command=self.load_click, font=("Arial", 9, "bold"), bg='#2563eb', fg='#000000', padx=15, pady=5)
+        self.load_btn.pack(side=tk.LEFT, padx=2)
         
-        self.anti_ban_btn = tk.Button(
-            btn_row2,
-            text="🛡️ ANTI-BAN",
-            command=self.anti_ban_click,
-            font=("Consolas", 10, "bold"),
-            bg='#ff44aa',
-            fg='#ffffff',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.anti_ban_btn.pack(side=tk.LEFT, padx=3)
+        self.anti_ban_btn = tk.Button(row2, text="🛡️ ANTI-BAN", command=self.anti_ban_click, font=("Arial", 9, "bold"), bg='#ec4899', fg='#000000', padx=15, pady=5)
+        self.anti_ban_btn.pack(side=tk.LEFT, padx=2)
         
-        self.exit_btn = tk.Button(
-            btn_row2,
-            text="❌ EXIT",
-            command=self.exit_click,
-            font=("Consolas", 10, "bold"),
-            bg='#666666',
-            fg='#ffffff',
-            padx=15,
-            pady=5,
-            cursor="hand2"
-        )
-        self.exit_btn.pack(side=tk.LEFT, padx=3)
+        self.exit_btn = tk.Button(row2, text="❌ EXIT", command=self.exit_click, font=("Arial", 9, "bold"), bg='#4b5563', fg='#ffffff', padx=15, pady=5)
+        self.exit_btn.pack(side=tk.LEFT, padx=2)
         
-        right_panel = tk.Frame(main_frame, bg=COLORS['bg'])
-        right_panel.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(5, 0))
+        # RIGHT PANEL
+        right = tk.Frame(main, bg='#1a1a2e')
+        right.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=(5, 0))
         
-        output_frame = tk.LabelFrame(
-            right_panel,
+        # OUTPUT
+        of = tk.LabelFrame(
+            right,
             text="📤 OUTPUT LOG",
-            font=("Consolas", 10),
-            fg=COLORS['fg'],
-            bg=COLORS['bg'],
+            font=("Arial", 10, "bold"),
+            fg='#00ff88',
+            bg='#16213e',
             labelanchor='n'
         )
-        output_frame.pack(fill=tk.BOTH, expand=True)
+        of.pack(fill=tk.BOTH, expand=True)
         
         self.output_text = scrolledtext.ScrolledText(
-            output_frame,
+            of,
             font=("Consolas", 9),
-            bg='#111111',
-            fg='#aaaaaa',
-            insertbackground=COLORS['fg'],
-            height=12
+            bg='#0f0f1a',
+            fg='#aabbcc',
+            insertbackground='#00ff88',
+            relief=tk.FLAT,
+            bd=0,
+            wrap=tk.WORD,
+            padx=10,
+            pady=10
         )
-        self.output_text.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        self.output_text.pack(fill=tk.BOTH, expand=True, padx=2, pady=2)
         self.output_text.config(state='disabled')
         
-        console_frame = tk.LabelFrame(
-            right_panel,
+        # CONSOLE
+        cf = tk.LabelFrame(
+            right,
             text="💻 CONSOLE",
-            font=("Consolas", 10),
-            fg=COLORS['fg'],
-            bg=COLORS['bg'],
+            font=("Arial", 10, "bold"),
+            fg='#00ff88',
+            bg='#16213e',
             labelanchor='n'
         )
-        console_frame.pack(fill=tk.X, pady=2)
+        cf.pack(fill=tk.X, pady=(8, 0))
         
         self.console_entry = tk.Entry(
-            console_frame,
-            font=("Consolas", 9),
-            bg='#111111',
-            fg=COLORS['fg'],
-            insertbackground=COLORS['fg']
+            cf,
+            font=("Consolas", 10),
+            bg='#0f0f1a',
+            fg='#00ff88',
+            insertbackground='#00ff88',
+            relief=tk.FLAT,
+            bd=0
         )
-        self.console_entry.pack(fill=tk.X, padx=5, pady=5)
+        self.console_entry.pack(fill=tk.BOTH, expand=True, padx=8, pady=8)
         self.console_entry.bind('<Return>', self.console_enter)
+        self.console_entry.insert(0, "Type command here...")
+        self.console_entry.bind('<FocusIn>', lambda e: self.console_entry.delete(0, tk.END) if self.console_entry.get() == "Type command here..." else None)
         
-        info_frame = tk.Frame(self.window, bg=COLORS['bg'])
-        info_frame.pack(fill=tk.X, padx=10, pady=5)
+        # FOOTER
+        footer = tk.Frame(self.window, bg='#16213e', height=28)
+        footer.pack(fill=tk.X, side=tk.BOTTOM)
+        footer.pack_propagate(False)
         
-        info_label = tk.Label(
-            info_frame,
-            text=f"Version {VERSION} | Build: {BUILD} | Release: {RELEASE_DATE}",
-            font=("Consolas", 8),
-            fg='#666666',
-            bg=COLORS['bg']
-        )
-        info_label.pack()
+        tk.Label(
+            footer,
+            text=f"Version {VERSION} | Build: {BUILD} | Author: {AUTHOR}",
+            font=("Arial", 8),
+            fg='#4a5a7a',
+            bg='#16213e'
+        ).pack(side=tk.LEFT, padx=10)
+        
+        tk.Label(
+            footer,
+            text=f"Release: {RELEASE_DATE}",
+            font=("Arial", 8),
+            fg='#4a5a7a',
+            bg='#16213e'
+        ).pack(side=tk.RIGHT, padx=10)
+    
+    # ============================================================
+    # LOGGING
+    # ============================================================
     
     def log(self, message, level="INFO"):
         self.output_text.config(state='normal')
         timestamp = get_timestamp()
         
         colors = {
-            'INFO': '#aaaaaa',
-            'SUCCESS': '#00ff00',
-            'ERROR': '#ff3333',
-            'WARNING': '#ffaa00',
-            'EXECUTE': '#00aaff'
+            'INFO': '#4a7a9a',
+            'SUCCESS': '#00ff88',
+            'ERROR': '#ef4444',
+            'WARNING': '#f59e0b',
+            'EXECUTE': '#00ccff'
         }
+        color = colors.get(level, '#4a7a9a')
         
-        color = colors.get(level, '#aaaaaa')
-        self.output_text.insert(tk.END, f"[{timestamp}] ", '#aaaaaa')
-        self.output_text.insert(tk.END, f"{level}: ", color)
-        self.output_text.insert(tk.END, f"{message}\n", '#aaaaaa')
+        self.output_text.insert(tk.END, f"[{timestamp}] ", 'timestamp')
+        self.output_text.insert(tk.END, f"{level}: ", f'level_{level}')
+        self.output_text.insert(tk.END, f"{message}\n", 'message')
+        
+        self.output_text.tag_config('timestamp', foreground='#4a5a7a')
+        self.output_text.tag_config('level_INFO', foreground=colors['INFO'])
+        self.output_text.tag_config('level_SUCCESS', foreground=colors['SUCCESS'])
+        self.output_text.tag_config('level_ERROR', foreground=colors['ERROR'])
+        self.output_text.tag_config('level_WARNING', foreground=colors['WARNING'])
+        self.output_text.tag_config('level_EXECUTE', foreground=colors['EXECUTE'])
+        self.output_text.tag_config('message', foreground='#aabbcc')
+        
         self.output_text.see(tk.END)
         self.output_text.config(state='disabled')
+    
+    def update_status(self, status, color):
+        self.status_label.config(text=status, fg=color)
+    
+    # ============================================================
+    # EVENT HANDLERS
+    # ============================================================
     
     def inject_click(self):
         self.log("🔍 Searching for Roblox process...", "INFO")
         success, message = self.injector.inject()
         if success:
             self.log(f"✅ {message}", "SUCCESS")
-            self.status_var.set("STATUS: READY | INJECTED: ✓ | MODE: HYBRID")
+            self.update_status("● INJECTED", '#00ff88')
         else:
             self.log(f"❌ {message}", "ERROR")
+            self.update_status("● ERROR", '#ef4444')
     
     def execute_click(self):
         script = self.script_input.get('1.0', tk.END)
@@ -685,21 +630,21 @@ print("Welcome to the ultimate executor!")
             initialdir=os.path.join(os.getcwd(), "scripts")
         )
         if file_path:
-            with open(file_path, 'w') as f:
+            with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(script)
             self.log(f"✅ Script saved to: {file_path}", "SUCCESS")
     
     def load_click(self):
-       file_path = filedialog.askopenfilename(
-           filetypes=[("Lua Script", "*.lua"), ("All Files", "*.*")],
-           initialdir=os.path.join(os.getcwd(), "scripts")
-       )
-       if file_path:
-           with open(file_path, 'r', encoding='utf-8') as f:
-               content = f.read()
-           self.script_input.delete('1.0', tk.END)
-           self.script_input.insert('1.0', content)
-           self.log(f"✅ Script loaded from: {file_path}", "SUCCESS")
+        file_path = filedialog.askopenfilename(
+            filetypes=[("Lua Script", "*.lua"), ("All Files", "*.*")],
+            initialdir=os.path.join(os.getcwd(), "scripts")
+        )
+        if file_path:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            self.script_input.delete('1.0', tk.END)
+            self.script_input.insert('1.0', content)
+            self.log(f"✅ Script loaded from: {file_path}", "SUCCESS")
     
     def anti_ban_click(self):
         self.log("🛡️ Activating anti-ban system...", "INFO")
@@ -710,7 +655,7 @@ print("Welcome to the ultimate executor!")
     
     def console_enter(self, event):
         command = self.console_entry.get().strip()
-        if command:
+        if command and command != "Type command here...":
             self.log(f"> {command}", "EXECUTE")
             try:
                 if command.startswith("print"):
@@ -724,7 +669,7 @@ print("Welcome to the ultimate executor!")
             self.console_entry.delete(0, tk.END)
     
     def exit_click(self):
-        self.log("❌ Exiting Nexus Executor...", "INFO")
+        self.log("👋 Exiting Nexus Executor...", "INFO")
         self.injector.eject()
         self.window.quit()
         sys.exit(0)
@@ -739,82 +684,108 @@ print("Welcome to the ultimate executor!")
 class ScriptLibraryWindow:
     def __init__(self, parent, script_manager, main_ui):
         self.window = tk.Toplevel(parent)
-        self.window.title("NEXUS SCRIPT LIBRARY")
-        self.window.geometry("600x500")
-        self.window.configure(bg=COLORS['bg'])
+        self.window.title("📚 NEXUS SCRIPT LIBRARY")
+        self.window.geometry("650x500")
+        self.window.configure(bg='#1a1a2e')
+        self.window.resizable(True, True)
+        
         self.script_manager = script_manager
         self.main_ui = main_ui
         self.setup_ui()
     
     def setup_ui(self):
-        title = tk.Label(
-            self.window,
+        header = tk.Frame(self.window, bg='#16213e', height=45)
+        header.pack(fill=tk.X)
+        header.pack_propagate(False)
+        
+        tk.Label(
+            header,
             text="📚 NEXUS SCRIPT LIBRARY",
-            font=("Consolas", 14, "bold"),
-            fg=COLORS['fg'],
-            bg=COLORS['bg']
-        )
-        title.pack(pady=10)
+            font=("Arial", 14, "bold"),
+            fg='#00ff88',
+            bg='#16213e'
+        ).pack(pady=10)
         
         notebook = ttk.Notebook(self.window)
-        notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=5)
+        notebook.pack(fill=tk.BOTH, expand=True, padx=10, pady=10)
+        
+        style = ttk.Style()
+        style.configure('TNotebook', background='#1a1a2e')
+        style.configure('TNotebook.Tab', background='#16213e', foreground='#00ff88')
+        style.map('TNotebook.Tab', background=[('selected', '#0f0f1a')])
         
         categories = self.script_manager.script_library.get('categories', {})
         for cat_name, scripts in categories.items():
-            frame = tk.Frame(notebook, bg=COLORS['bg'])
+            frame = tk.Frame(notebook, bg='#1a1a2e')
             notebook.add(frame, text=cat_name.upper())
             self.populate_scripts(frame, scripts)
     
     def populate_scripts(self, frame, scripts):
         if not scripts:
-            label = tk.Label(
+            tk.Label(
                 frame,
                 text="No scripts available",
-                font=("Consolas", 10),
-                fg='#666666',
-                bg=COLORS['bg']
-            )
-            label.pack(pady=20)
+                font=("Arial", 11),
+                fg='#4a5a7a',
+                bg='#1a1a2e'
+            ).pack(pady=40)
             return
         
+        container = tk.Frame(frame, bg='#1a1a2e')
+        container.pack(fill=tk.BOTH, expand=True)
+        
+        canvas = tk.Canvas(container, bg='#1a1a2e', highlightthickness=0)
+        scrollbar = ttk.Scrollbar(container, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg='#1a1a2e')
+        
+        scrollable_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        
+        canvas.pack(side="left", fill="both", expand=True)
+        scrollbar.pack(side="right", fill="y")
+        
         for script in scripts:
-            script_frame = tk.Frame(frame, bg='#111111', relief=tk.RIDGE, bd=1)
-            script_frame.pack(fill=tk.X, padx=5, pady=2)
-            
-            name_label = tk.Label(
-                script_frame,
-                text=script.get('name', 'Unknown'),
-                font=("Consolas", 10, "bold"),
-                fg=COLORS['fg'],
-                bg='#111111'
+            item_frame = tk.Frame(
+                scrollable_frame,
+                bg='#16213e',
+                relief=tk.RIDGE,
+                bd=1
             )
-            name_label.pack(side=tk.LEFT, padx=5, pady=5)
+            item_frame.pack(fill=tk.X, padx=5, pady=2)
             
-            load_btn = tk.Button(
-                script_frame,
+            tk.Label(
+                item_frame,
+                text=script.get('name', 'Unknown'),
+                font=("Arial", 10, "bold"),
+                fg='#00ff88',
+                bg='#16213e'
+            ).pack(side=tk.LEFT, padx=10, pady=5)
+            
+            btn_frame = tk.Frame(item_frame, bg='#16213e')
+            btn_frame.pack(side=tk.RIGHT, padx=5)
+            
+            tk.Button(
+                btn_frame,
                 text="📥 Load",
                 command=lambda s=script: self.load_script(s),
-                font=("Consolas", 8),
-                bg=COLORS['accent'],
+                font=("Arial", 8, "bold"),
+                bg='#00aa55',
                 fg='#000000',
                 padx=10,
-                pady=2,
-                cursor="hand2"
-            )
-            load_btn.pack(side=tk.RIGHT, padx=5, pady=2)
+                pady=3
+            ).pack(side=tk.LEFT, padx=2)
             
-            download_btn = tk.Button(
-                script_frame,
+            tk.Button(
+                btn_frame,
                 text="⬇️ Download",
                 command=lambda s=script: self.download_script(s),
-                font=("Consolas", 8),
-                bg=COLORS['info'],
+                font=("Arial", 8, "bold"),
+                bg='#0088ff',
                 fg='#000000',
                 padx=10,
-                pady=2,
-                cursor="hand2"
-            )
-            download_btn.pack(side=tk.RIGHT, padx=5, pady=2)
+                pady=3
+            ).pack(side=tk.LEFT, padx=2)
     
     def load_script(self, script):
         filename = script.get('file', '')
