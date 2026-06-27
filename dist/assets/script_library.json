@@ -1,0 +1,46 @@
+{
+    "version": "1.0.0",
+    "categories": {
+        "universal": [
+            {
+                "name": "Infinite Yield",
+                "file": "universal/infinite_yield.lua",
+                "url": "https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"
+            },
+            {
+                "name": "CMD-X",
+                "file": "universal/cmd_x.lua",
+                "url": "https://raw.githubusercontent.com/CMD-X/CMD-X/master/CMD-X.lua"
+            }
+        ],
+        "games": [
+            {
+                "name": "Arsenal",
+                "file": "games/arsenal.lua",
+                "url": "https://raw.githubusercontent.com/ArsenalHub/Arsenal/main/loader.lua"
+            },
+            {
+                "name": "BedWars",
+                "file": "games/bedwars.lua",
+                "url": "https://raw.githubusercontent.com/BedWarsHub/BedWars/main/loader.lua"
+            },
+            {
+                "name": "Blox Fruits",
+                "file": "games/blox_fruits.lua",
+                "url": "https://raw.githubusercontent.com/BloxFruitsHub/BloxFruits/main/loader.lua"
+            }
+        ],
+        "tools": [
+            {
+                "name": "Anti-AFK",
+                "file": "tools/anti_afk.lua",
+                "url": "https://raw.githubusercontent.com/NexusTools/AntiAFK/main/loader.lua"
+            },
+            {
+                "name": "ESP",
+                "file": "tools/esp.lua",
+                "url": "https://raw.githubusercontent.com/NexusTools/ESP/main/loader.lua"
+            }
+        ]
+    }
+}

@@ -132,7 +132,7 @@ class ScriptManager:
             response = requests.get(url, timeout=10)
             if response.status_code == 200:
                 path = os.path.join(self.script_dir, filename)
-                with open(path, 'w') as f:
+                with open(path, 'w', encoding='utf-8') as f:
                     f.write(response.text)
                 return True
             return False
@@ -148,7 +148,7 @@ class ScriptManager:
     
     def save_script(self, filename, content):
         path = os.path.join(self.script_dir, filename)
-        with open(path, 'w') as f:
+        with open(path, 'w', encoding='utf-8') as f:
             f.write(content)
         return True
 
@@ -690,16 +690,16 @@ print("Welcome to the ultimate executor!")
             self.log(f"✅ Script saved to: {file_path}", "SUCCESS")
     
     def load_click(self):
-        file_path = filedialog.askopenfilename(
-            filetypes=[("Lua Script", "*.lua"), ("All Files", "*.*")],
-            initialdir=os.path.join(os.getcwd(), "scripts")
-        )
-        if file_path:
-            with open(file_path, 'r') as f:
-                content = f.read()
-            self.script_input.delete('1.0', tk.END)
-            self.script_input.insert('1.0', content)
-            self.log(f"✅ Script loaded from: {file_path}", "SUCCESS")
+       file_path = filedialog.askopenfilename(
+           filetypes=[("Lua Script", "*.lua"), ("All Files", "*.*")],
+           initialdir=os.path.join(os.getcwd(), "scripts")
+       )
+       if file_path:
+           with open(file_path, 'r', encoding='utf-8') as f:
+               content = f.read()
+           self.script_input.delete('1.0', tk.END)
+           self.script_input.insert('1.0', content)
+           self.log(f"✅ Script loaded from: {file_path}", "SUCCESS")
     
     def anti_ban_click(self):
         self.log("🛡️ Activating anti-ban system...", "INFO")
