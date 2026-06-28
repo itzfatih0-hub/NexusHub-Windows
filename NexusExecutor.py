@@ -655,18 +655,153 @@ print("Welcome to the ultimate executor!")
     
     def console_enter(self, event):
         command = self.console_entry.get().strip()
-        if command and command != "Type command here...":
-            self.log(f"> {command}", "EXECUTE")
+        if not command or command == "Type command here...":
+            return
+
+        self.log(f"> {command}", "EXECUTE")
+        self.console_entry.delete(0, tk.END)
+
+        # ============================================================
+        # 1. PRINT
+        # ============================================================
+        if command.startswith("print("):
             try:
-                if command.startswith("print"):
-                    self.log(command[6:].strip('"\'()'), "INFO")
-                elif command.startswith("loadstring"):
-                    self.log("⚠️ loadstring not supported in console", "WARNING")
-                else:
-                    self.log(f"❌ Unknown command: {command}", "ERROR")
+                msg = command[6:-1].strip('"\'')
+                self.log(f"📤 {msg}", "INFO")
             except:
-                self.log(f"❌ Error executing: {command}", "ERROR")
-            self.console_entry.delete(0, tk.END)
+                self.log("❌ Format: print('teks')", "ERROR")
+
+        # ============================================================
+        # 2. LOADSTRING
+        # ============================================================
+        elif command.startswith("loadstring("):
+            try:
+                raw = command[11:-1].strip()
+                if raw.startswith('"') or raw.startswith("'"):
+                    script_content = raw.strip('"\'')
+                else:
+                    script_content = raw
+
+                self.log("📥 Menjalankan loadstring...", "EXECUTE")
+
+                if script_content.startswith("http"):
+                    self.log(f"🌐 Downloading from: {script_content}", "INFO")
+                    try:
+                        import requests
+                        response = requests.get(script_content, timeout=5)
+                        if response.status_code == 200:
+                            script = response.text
+                            self.log(f"✅ Script downloaded ({len(script)} chars)", "SUCCESS")
+                            self.luau_engine.execute(script)
+                        else:
+                            self.log(f"❌ Gagal download: HTTP {response.status_code}", "ERROR")
+                    except Exception as e:
+                        self.log(f"❌ Error download: {e}", "ERROR")
+                else:
+                    self.luau_engine.execute(script_content)
+                    self.log("✅ Script executed via loadstring", "SUCCESS")
+
+            except Exception as e:
+                self.log(f"❌ Error loadstring: {e}", "ERROR")
+
+        # ============================================================
+        # 3. REQUIRE
+        # ============================================================
+        elif command.startswith("require("):
+            try:
+                raw = command[8:-1].strip()
+
+                if raw.isdigit():
+                    asset_id = raw
+                    self.log(f"📦 Requiring asset ID: {asset_id}", "EXECUTE")
+
+                    try:
+                        import requests
+                        url = f"https://www.roblox.com/asset/?id={asset_id}"
+                        response = requests.get(url, timeout=10)
+
+                        if response.status_code == 200:
+                            module_content = response.text
+                            self.log(f"✅ Module loaded (ID: {asset_id}) — {len(module_content)} chars", "SUCCESS")
+                            self.luau_engine.execute(module_content)
+                        else:
+                            self.log(f"❌ Gagal load asset: HTTP {response.status_code}", "ERROR")
+                    except Exception as e:
+                        self.log(f"❌ Error loading asset: {e}", "ERROR")
+
+                else:
+                    path = raw.strip('"\'')
+                    self.log(f"📦 Require: {path} (local file)", "EXECUTE")
+
+                    import os
+                    possible_paths = [
+                        os.path.join(os.getcwd(), "scripts", path + ".lua"),
+                        os.path.join(os.getcwd(), "scripts", path),
+                        os.path.join(os.getcwd(), "scripts", "universal", path + ".lua"),
+                        os.path.join(os.getcwd(), "scripts", "games", path + ".lua"),
+                    ]
+
+                    loaded = False
+                    for p in possible_paths:
+                        if os.path.exists(p):
+                            with open(p, 'r', encoding='utf-8') as f:
+                                content = f.read()
+                            self.log(f"✅ Module loaded: {p}", "SUCCESS")
+                            self.luau_engine.execute(content)
+                            loaded = True
+                            break
+
+                    if not loaded:
+                        self.log(f"❌ Module not found: {path}", "ERROR")
+
+            except Exception as e:
+                self.log(f"❌ Error require: {e}", "ERROR")
+
+        # ============================================================
+        # 4. INJECT
+        # ============================================================
+        elif command == "inject":
+            self.inject_click()
+
+        # ============================================================
+        # 5. EXECUTE
+        # ============================================================
+        elif command == "execute":
+            self.execute_click()
+
+        # ============================================================
+        # 6. CLEAR
+        # ============================================================
+        elif command == "clear":
+            self.clear_click()
+
+        # ============================================================
+        # 7. STATUS
+        # ============================================================
+        elif command == "status":
+            status = "INJECTED ✓" if self.injector.injected else "NOT INJECTED ✗"
+            self.log(f"📌 Status: {status}", "INFO")
+
+        # ============================================================
+        # 8. HELP
+        # ============================================================
+        elif command == "help":
+            self.log("📖 DAFTAR PERINTAH CONSOLE:", "INFO")
+            self.log("  print('teks')          → tampilkan teks", "INFO")
+            self.log("  loadstring('url')      → jalankan script dari URL atau string", "INFO")
+            self.log("  require(12345)         → load module dari asset ID Roblox", "INFO")
+            self.log("  require('modul')       → load module dari folder scripts/", "INFO")
+            self.log("  inject                 → inject ke Roblox", "INFO")
+            self.log("  execute                → jalankan script dari input", "INFO")
+            self.log("  clear                  → hapus script input", "INFO")
+            self.log("  status                 → cek status inject", "INFO")
+            self.log("  help                   → tampilkan ini", "INFO")
+
+        # ============================================================
+        # 9. UNKNOWN
+        # ============================================================
+        else:
+            self.log(f"❌ Perintah tidak dikenal. Ketik 'help' untuk daftar.", "ERROR")
     
     def exit_click(self):
         self.log("👋 Exiting Nexus Executor...", "INFO")
