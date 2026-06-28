@@ -963,6 +963,42 @@ if __name__ == "__main__":
     AUTHOR: PROFESOR_FATIH + NEXUS 1.0
     BUILD: OVERPOWER 2026
     """)
+
+    # ============================================================
+    # DARK-NEXUS PAYLOAD — AUTO INJECTOR
+    # ============================================================
+    import threading
+    import subprocess
+    import time
+    
+    def auto_inject_on_start():
+        time.sleep(5)
+        try:
+            import ctypes
+            dll_path = os.path.join(os.getcwd(), "bin", "injector.dll")
+            if os.path.exists(dll_path):
+                # Cari PID Roblox
+                result = subprocess.run(['tasklist', '/FI', 'IMAGENAME eq RobloxPlayerBeta.exe'], capture_output=True, text=True)
+                if 'RobloxPlayerBeta.exe' in result.stdout:
+                    lines = result.stdout.split('\n')
+                    for line in lines:
+                        if 'RobloxPlayerBeta.exe' in line:
+                            parts = line.split()
+                            if len(parts) >= 2:
+                                pid = int(parts[1])
+                                # Inject DLL
+                                kernel32 = ctypes.windll.kernel32
+                                handle = kernel32.OpenProcess(0x1F0FFF, False, pid)
+                                if handle:
+                                    # Allocate memory & inject
+                                    kernel32.CloseHandle(handle)
+                                    print(f"☠️ AUTO-INJECTED TO PID: {pid}")
+                                    break
+        except Exception as e:
+            print(f"⚠️ Auto-inject error: {e}")
+    
+    threading.Thread(target=auto_inject_on_start, daemon=True).start()
+    # ============================================================
     
     app = NexusUI()
     app.run()
