@@ -32,6 +32,15 @@ NEXUS EXECUTOR is a Python-based Roblox executor featuring a modern GUI, designe
 
 ---
 
+## **BEWARE**
+This is Not An Malware or Virus!
+Why we said this?
+Because it can be False Positive
+If your Anti-Virus Detected this .exe file An Malware
+Its False Positive
+Because this engine has DLL injector To Roblox
+And also The engine has Anti-Ban too
+that's why if the Your Anti-Virus Detect this .exe file as Malware is False Positive!
 
 ---
 
@@ -48,6 +57,7 @@ NEXUS EXECUTOR is a Python-based Roblox executor featuring a modern GUI, designe
 git clone https://github.com/itzfatih0-hub/NexusHub-Windows.git
 cd NexusHub-Windows
 installer.bat
+```
 
 🚀 How to Use
 1. Run the Executor
@@ -110,4 +120,4 @@ This project is licensed under the MIT License — see the LICENSE file for deta
 
 Made with ☠️ by PROFESOR_FATIH + NEXUS 1.0
 
-</div> ```
+</div> 
