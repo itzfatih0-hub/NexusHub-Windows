@@ -44,6 +44,31 @@ that's why if the Your Anti-Virus Detect this .exe file as Malware is False Posi
 
 ---
 
+## **WHAT IS DLL INJECTOR FOR ROBLOX?**
+A DLL Injector for Roblox is a program that forces a Dynamic Link Library (DLL) into another running process—in this case, the Roblox client.
+Here's the basic idea:
+
+The injector finds the Roblox process (e.g., RobloxPlayerBeta.exe).
+It uses operating system APIs to load a DLL into that process.
+Once loaded, the DLL runs its own code inside Roblox's memory.
+
+Developers use DLL injection legitimately for things like:
+
+Debugging software.
+Accessibility tools.
+Performance profilers.
+Some game overlays (when permitted).
+
+However, in the Roblox community, DLL injectors are most commonly associated with exploit/executor software that injects custom code into the game client. These tools are often used to:
+
+Execute unauthorized scripts.
+Modify game behavior.
+Bypass client-side restrictions.
+
+Because of this, antivirus programs frequently flag Roblox executors and DLL injectors as suspicious or malicious. Even if a particular injector isn't intentionally harmful, DLL injection is a technique also used by malware, so security software treats it as high risk.
+
+---
+
 ## 📥 **How to Download & Install**
 
 ### **Method 1: Download ZIP**
@@ -61,7 +86,7 @@ installer.bat
 
 🚀 How to Use
 1. Run the Executor
-Double-click NexusExecutor.exe (if already built)
+Double-click NexusExecutor.exe 
 
 Or run via Python: python NexusExecutor.py
 
